@@ -653,6 +653,7 @@ a.product-card:focus-visible {
   padding: 0.45rem 0.85rem;
   font-size: 0.88rem;
   letter-spacing: 0.02em;
+  scroll-margin-top: calc(var(--header-h) + 1rem);
 }
 
 /* ---------- Steps ---------- */
