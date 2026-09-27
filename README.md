@@ -1,6 +1,6 @@
 # SP International Pvt Ltd — website
 
-Static brochure site for **SP International Pvt Ltd** (motto: *Trade Beyond Borders*).
+Static brochure site for **SP International Pvt Ltd** (motto: *Trade Beyond Borders*), an Indian spice supplier. The public pages cover turmeric, red chilli powder, and cumin, with more spices on request. Brass and art-metal décor are on hold and are not shown.
 
 Preferred public domain: **spinternationalpvtltd.com**
 A `CNAME` file is included for GitHub Pages. DNS must still be pointed at GitHub Pages by the domain owner — this file does not mean that step is already done.
