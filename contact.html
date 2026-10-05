@@ -95,9 +95,23 @@
               <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91 …">
             </div>
           </div>
-          <div class="fields" style="margin-top: 0.95rem;">
+          <div class="quantity-row" style="margin-top: 0.95rem;">
             <label for="quantity">Quantity <span class="opt">(optional — no minimum published)</span></label>
             <input id="quantity" name="quantity" type="text" placeholder="e.g. trial lot, or leave blank">
+            <fieldset class="quantity-unit" id="quantity-unit" aria-describedby="quantity-unit-hint">
+              <legend>Unit</legend>
+              <span id="quantity-unit-hint" class="sr-only">Required if you enter a quantity. Choose kg or tonnes.</span>
+              <div class="unit-options">
+                <label class="unit-option" for="quantity-unit-kg">
+                  <input id="quantity-unit-kg" name="quantity_unit" type="radio" value="kg">
+                  <span>kg</span>
+                </label>
+                <label class="unit-option" for="quantity-unit-tonnes">
+                  <input id="quantity-unit-tonnes" name="quantity_unit" type="radio" value="tonnes">
+                  <span>tonnes</span>
+                </label>
+              </div>
+            </fieldset>
           </div>
           <div class="fields" style="margin-top: 0.95rem;">
             <label for="message">Message</label>
