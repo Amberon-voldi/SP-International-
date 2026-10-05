@@ -69,16 +69,41 @@
       whatsapp: val("whatsapp"),
       product: val("product"),
       quantity: val("quantity"),
+      unit: selectedUnit(),
       message: val("message")
     };
+  }
+
+  function selectedUnit() {
+    var checked = document.querySelector('#quote-form input[name="quantity_unit"]:checked');
+    return checked ? String(checked.value || "").trim() : "";
+  }
+
+  function markUnitInvalid(invalid) {
+    var field = document.getElementById("quantity-unit");
+    if (!field) return;
+    if (invalid) field.setAttribute("aria-invalid", "true");
+    else field.removeAttribute("aria-invalid");
   }
 
   function validate(data) {
     if (!data.name) return "Please enter your name.";
     if (!data.email && !data.whatsapp) return "Please give an email or a WhatsApp number so we can reply.";
     if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return "Please check the email address.";
+    if (data.quantity && data.unit !== "kg" && data.unit !== "tonnes") {
+      markUnitInvalid(true);
+      var firstUnit = document.getElementById("quantity-unit-kg");
+      if (firstUnit) firstUnit.focus();
+      return "Please choose kg or tonnes for the quantity.";
+    }
+    markUnitInvalid(false);
     if (!data.message) return "Please add a short message.";
     return "";
+  }
+
+  function quantityWithUnit(data) {
+    if (!data.quantity) return "—";
+    return data.unit ? data.quantity + " " + data.unit : data.quantity;
   }
 
   function composeBody(data) {
@@ -91,7 +116,8 @@
       "Email: " + (data.email || "—"),
       "WhatsApp: " + (data.whatsapp || "—"),
       "Product interest: " + (data.product || "—"),
-      "Quantity (optional): " + (data.quantity || "—"),
+      "Quantity (optional): " + quantityWithUnit(data),
+      "Unit: " + (data.unit || "—"),
       "",
       "Message:",
       data.message
@@ -126,6 +152,25 @@
       setStatus("ok", "Opening your email app with a drafted message to info@spinternationalpvtltd.com.");
       openMailto(data);
     });
+
+    form.querySelectorAll('input[name="quantity_unit"]').forEach(function (radio) {
+      radio.addEventListener("change", function () { markUnitInvalid(false); });
+    });
+
+    var quantityInput = document.getElementById("quantity");
+    function syncUnitRequired() {
+      var needed = !!(quantityInput && quantityInput.value.trim());
+      form.querySelectorAll('input[name="quantity_unit"]').forEach(function (radio) {
+        if (needed) radio.setAttribute("required", "");
+        else radio.removeAttribute("required");
+      });
+      var field = document.getElementById("quantity-unit");
+      if (field) field.setAttribute("aria-required", needed ? "true" : "false");
+    }
+    if (quantityInput) {
+      quantityInput.addEventListener("input", syncUnitRequired);
+      syncUnitRequired();
+    }
 
     var waBtn = document.getElementById("send-whatsapp");
     if (waBtn) {
