@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Request a Spice Quote | SP International</title>
-  <meta name="description" content="Request an Indian spice quotation from SP International. Choose turmeric powder, red chilli powder or cumin seeds and send your buying brief by email or WhatsApp.">
+  <meta name="description" content="Request a quote for turmeric, red chilli powder, or cumin. Brass décor also available. Quotes on request.">
   <meta name="theme-color" content="#042654">
   <link rel="icon" href="assets/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/favicon-192.png">
   <link rel="canonical" href="https://spinternationalpvtltd.com/contact.html">
   <meta property="og:title" content="Request a Spice Quote | SP International">
-  <meta property="og:description" content="A quick WhatsApp enquiry needs only your product. For a written quotation, add your delivery country and email. Quantity and specifications can follow.">
+  <meta property="og:description" content="Request a quote for turmeric, red chilli powder, or cumin. Brass décor also available. Quotes on request.">
   <meta property="og:image" content="https://spinternationalpvtltd.com/assets/sp-whatsapp-profile-square.png">
   <meta property="og:url" content="https://spinternationalpvtltd.com/contact.html">
   <meta property="og:type" content="website">
@@ -35,10 +35,9 @@
     <section class="page-hero slim">
       <img class="orbit" src="assets/orbit.svg" alt="">
       <div class="wrap">
-        <p class="kicker light">A simpler start</p>
-        <h1 class="display">Your spice. <em>Your quotation.</em></h1>
-        <p class="lede">Choose a product and start on WhatsApp. Prefer a written quote? Add your delivery country and reply email. Everything else can follow.</p>
-        <a class="btn btn-gold" href="#quote-form">Start your enquiry <span aria-hidden="true">↓</span></a>
+        <p class="kicker light">Contact</p>
+        <h1 class="display">Request a <em>quote</em></h1>
+        <p class="lede">Name, a way to reply, and a short message. We source and quote.</p>
       </div>
     </section>
 
@@ -55,7 +54,7 @@
                 <option value="">Choose your product</option>
                 <option value="Turmeric">Turmeric powder</option>
                 <option>Red chilli powder</option>
-                <option value="Cumin">Cumin seeds</option>
+                <option>Cumin</option>
                 <option value="Brass / art metal décor">Brass / art-metal décor</option>
                 <option>Other spice (on request)</option>
                 <option>More than one / mixed enquiry</option>
@@ -77,52 +76,29 @@
               <input id="email" name="email" type="email" autocomplete="email" aria-describedby="reply-hint" placeholder="you@company.com" required>
             </div>
           </div>
-          <p class="field-hint" id="reply-hint">These two details are for a written quote. Not needed for WhatsApp.</p>
-          <section class="quote-details" id="quote-details" aria-labelledby="quote-details-title">
-            <h3 id="quote-details-title">Add buying details <span class="opt">(optional)</span></h3>
-            <div class="fields pair">
-              <div>
-                <label for="name">Your name <span class="opt">(optional)</span></label>
-                <input id="name" name="name" type="text" autocomplete="name">
+          <div class="quantity-row" style="margin-top: 0.95rem;">
+            <label for="quantity">Quantity <span class="opt">(optional — no minimum published)</span></label>
+            <input id="quantity" name="quantity" type="text" placeholder="e.g. trial lot, or leave blank">
+            <fieldset class="quantity-unit" id="quantity-unit" aria-describedby="quantity-unit-hint">
+              <legend>Unit</legend>
+              <span id="quantity-unit-hint" class="sr-only">Required if you enter a quantity. Choose kg or tonnes.</span>
+              <div class="unit-options">
+                <label class="unit-option" for="quantity-unit-kg">
+                  <input id="quantity-unit-kg" name="quantity_unit" type="radio" value="kg">
+                  <span>kg</span>
+                </label>
+                <label class="unit-option" for="quantity-unit-tonnes">
+                  <input id="quantity-unit-tonnes" name="quantity_unit" type="radio" value="tonnes">
+                  <span>tonnes</span>
+                </label>
               </div>
-              <div>
-                <label for="whatsapp">Phone / WhatsApp <span class="opt">(optional)</span></label>
-                <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="whatsapp-hint" placeholder="+971 …">
-                <p class="field-hint" id="whatsapp-hint">Include your country code if you would like a phone reply.</p>
-              </div>
-            </div>
-            <div class="fields">
-              <div>
-                <label for="company">Company <span class="opt">(optional)</span></label>
-                <input id="company" name="company" type="text" autocomplete="organization">
-              </div>
-            </div>
-            <div class="quantity-row">
-              <label for="quantity">Quantity <span class="opt">(if known)</span></label>
-              <input id="quantity" name="quantity" type="text" inputmode="decimal" placeholder="e.g. 500">
-              <fieldset class="quantity-unit" id="quantity-unit" aria-describedby="quantity-unit-hint">
-                <legend>Unit</legend>
-                <span id="quantity-unit-hint" class="sr-only">Required if you enter a quantity. Choose kg or tonnes.</span>
-                <div class="unit-options">
-                  <label class="unit-option" for="quantity-unit-kg">
-                    <input id="quantity-unit-kg" name="quantity_unit" type="radio" value="kg" checked>
-                    <span>kg</span>
-                  </label>
-                  <label class="unit-option" for="quantity-unit-tonnes">
-                    <input id="quantity-unit-tonnes" name="quantity_unit" type="radio" value="tonnes">
-                    <span>tonnes</span>
-                  </label>
-                </div>
-              </fieldset>
-            </div>
-            <div class="fields">
-              <div>
-                <label for="message">Specifications or notes <span class="opt">(optional)</span></label>
-                <textarea id="message" name="message" placeholder="Required grade, heat or grind, packing preference, documents, or other products you need."></textarea>
-              </div>
-            </div>
-          </section>
-          <p class="req-note">Quantity not decided? Leave it for the conversation with the desk.</p>
+            </fieldset>
+          </div>
+          <div class="fields" style="margin-top: 0.95rem;">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required placeholder="Product, destination, and any notes."></textarea>
+          </div>
+          <p class="req-note">Required: name, a message, and either email or WhatsApp.</p>
           <div class="form-actions">
             <button class="btn btn-navy" type="submit" id="submit-quote" data-enquiry-action disabled>Open email draft — then Send</button>
             <button class="btn btn-text" type="button" id="preview-enquiry" data-enquiry-action disabled>Review / copy enquiry</button>
