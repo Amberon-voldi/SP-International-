@@ -20,26 +20,15 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="quote-page">
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="brand" href="index.html">
-        <img class="brand-lockup" src="assets/logo-lockup.png" alt="SP International Pvt Ltd — Trade Beyond Borders" width="1048" height="407">
-        <img class="brand-mark" src="assets/logo-mark.png" alt="SP International Pvt Ltd" width="433" height="454">
-      </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        <span class="sr-only">Menu</span>
-        <span></span><span></span>
-      </button>
-      <nav id="site-nav" class="site-nav" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="about.html">About</a>
-        <a href="contact.html" aria-current="page">Contact</a>
-        <a class="btn btn-gold" href="contact.html">Request a quote</a>
-      </nav>
+      <a class="brand" href="index.html"><img class="brand-lockup" src="assets/logo-lockup.png" alt="SP International Pvt Ltd — Trade Beyond Borders" width="1048" height="407"></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="sr-only">Menu</span><span></span><span></span></button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="index.html">Home</a><a href="products.html">Our spices</a><a href="about.html">Our story</a><a href="contact.html" aria-current="page">Contact</a><a class="btn btn-gold" href="#quote-form">Request a quote <span aria-hidden="true">↗</span></a></nav>
     </div>
+    <div class="scroll-progress" aria-hidden="true"></div>
   </header>
 
   <main id="main">
@@ -54,29 +43,16 @@
 
     <section class="section">
       <div class="wrap contact-grid">
-        <form class="quote-form" id="quote-form" novalidate>
-          <h2>Write to the desk</h2>
-          <p class="form-note">The form opens your email app with a drafted message to the company inbox. You can send the same text on WhatsApp instead.</p>
-          <div class="fields pair">
+        <form class="quote-form" id="quote-form" aria-describedby="quote-form-note" novalidate>
+          <h2>Your quote brief</h2>
+          <p class="form-note" id="quote-form-note">Choose your spice below. Written requests open an email draft: review it and press Send in your email app; opening a draft does not submit a request.</p>
+          <noscript><p class="form-note">Enable JavaScript to prepare an enquiry, or contact us directly at <a href="mailto:info@spinternationalpvtltd.com">our email address</a> or <a href="https://wa.me/919286492989">on WhatsApp</a>.</p></noscript>
+          <div class="fields">
             <div>
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="name" required>
-            </div>
-            <div>
-              <label for="company">Company <span class="opt">(optional)</span></label>
-              <input id="company" name="company" type="text" autocomplete="organization">
-            </div>
-          </div>
-          <div class="fields pair" style="margin-top: 0.95rem;">
-            <div>
-              <label for="country">Country <span class="opt">(optional)</span></label>
-              <input id="country" name="country" type="text" autocomplete="country-name">
-            </div>
-            <div>
-              <label for="product">Product interest <span class="opt">(optional)</span></label>
-              <select id="product" name="product">
-                <option value="">Select a line</option>
-                <option>Turmeric</option>
+              <label for="product">Your product <span class="opt">(required)</span></label>
+              <select id="product" name="product" required>
+                <option value="">Choose your product</option>
+                <option value="Turmeric">Turmeric powder</option>
                 <option>Red chilli powder</option>
                 <option>Cumin</option>
                 <option value="Brass / art metal décor">Brass / art-metal décor</option>
@@ -85,14 +61,19 @@
               </select>
             </div>
           </div>
-          <div class="fields pair" style="margin-top: 0.95rem;">
+          <div class="quote-quick-action">
+            <button class="btn btn-gold" type="button" id="send-whatsapp" data-enquiry-action disabled>Quick quote on WhatsApp <span aria-hidden="true">↗</span></button>
+            <p class="field-hint">No name, email or phone entry needed. We reply in your chat.</p>
+          </div>
+          <p class="quote-route-title">Or, request a written quotation</p>
+          <div class="fields pair">
             <div>
-              <label for="email">Email <span class="opt">(email or WhatsApp required)</span></label>
-              <input id="email" name="email" type="email" autocomplete="email">
+              <label for="country">Delivery country <span class="opt">(required)</span></label>
+              <input id="country" name="country" type="text" autocomplete="country-name" aria-describedby="reply-hint" placeholder="e.g. United Arab Emirates" required>
             </div>
             <div>
-              <label for="whatsapp">WhatsApp <span class="opt">(email or WhatsApp required)</span></label>
-              <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91 …">
+              <label for="email">Reply email <span class="opt">(required)</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" aria-describedby="reply-hint" placeholder="you@company.com" required>
             </div>
           </div>
           <div class="quantity-row" style="margin-top: 0.95rem;">
@@ -119,30 +100,50 @@
           </div>
           <p class="req-note">Required: name, a message, and either email or WhatsApp.</p>
           <div class="form-actions">
-            <button class="btn btn-gold" type="submit">Open email draft</button>
-            <button class="btn btn-line" type="button" id="send-whatsapp">Send on WhatsApp</button>
+            <button class="btn btn-navy" type="submit" id="submit-quote" data-enquiry-action disabled>Open email draft — then Send</button>
+            <button class="btn btn-text" type="button" id="preview-enquiry" data-enquiry-action disabled>Review / copy enquiry</button>
           </div>
-          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          <p class="form-status" id="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+          <section class="draft-preview" id="draft-preview" aria-labelledby="draft-title" hidden>
+            <h3 id="draft-title">Your enquiry draft</h3>
+            <p class="field-hint" id="draft-hint">A draft does not send a request. Review it and press Send in WhatsApp or your email app. If an app does not open, copy the message and use the direct contact details.</p>
+            <label for="enquiry-draft">Enquiry message</label>
+            <textarea id="enquiry-draft" readonly aria-describedby="draft-hint"></textarea>
+            <div class="btn-row">
+              <button class="btn btn-line" type="button" id="copy-enquiry">Copy enquiry</button>
+              <a class="text-link" id="draft-email-link" href="mailto:info@spinternationalpvtltd.com">Open email draft</a>
+              <a class="text-link" id="draft-whatsapp-link" href="https://wa.me/919286492989" rel="noopener">Open WhatsApp draft</a>
+            </div>
+          </section>
+          <p class="req-note" id="quote-privacy-note">No online submission service is connected. Your details prepare the enquiry you choose to send; the website does not save your draft.</p>
         </form>
 
-        <aside>
+        <aside aria-label="Trading desk and enquiry guidance">
+          <div class="step">
+            <h2>What happens next?</h2>
+            <ol class="quote-intro">
+              <li>You send your brief using the formal quote route, email or WhatsApp.</li>
+              <li>We clarify your requirements and check Indian suppliers.</li>
+              <li>We come back with a written quotation for you to review.</li>
+            </ol>
+          </div>
           <div class="contact-card">
-            <h3>Email</h3>
+            <h3>Prefer a direct conversation?</h3>
+            <a href="https://wa.me/919286492989?text=Hello%20SP%20International%2C%20I%20would%20like%20a%20spice%20quotation." rel="noopener">WhatsApp +91 92864 92989</a>
+          </div>
+          <div class="contact-card">
+            <h3>Email the desk</h3>
             <a href="mailto:info@spinternationalpvtltd.com">info@spinternationalpvtltd.com</a>
           </div>
           <div class="contact-card">
-            <h3>WhatsApp</h3>
-            <a id="desk-whatsapp" data-wa href="https://wa.me/919286492989">+91 92864 92989</a>
-          </div>
-          <div class="contact-card">
-            <h3>Location</h3>
-            <p>India</p>
-          </div>
-          <div class="contact-card">
-            <h3>Desk</h3>
+            <h3>Your contact</h3>
             <p>Siddharth Aneja</p>
           </div>
-          <p class="req-note">We reply as a trading desk. We do not take website payments and we do not publish bank or tax details here.</p>
+          <div class="contact-card">
+            <h3>Based in India</h3>
+            <p>Sikandrabad, Uttar Pradesh</p>
+          </div>
+          <p class="req-note">Need destination-specific documents or packing? Add those requirements to the optional notes so we can discuss them during sourcing.</p>
         </aside>
       </div>
     </section>
@@ -150,33 +151,15 @@
 
   <footer class="site-footer">
     <div class="wrap footer-grid">
-      <div>
-        <img class="footer-logo" src="assets/logo-lockup.png" alt="SP International Pvt Ltd — Trade Beyond Borders" width="1048" height="407">
-        <p class="footer-motto">Trade Beyond Borders</p>
-      </div>
-      <div>
-        <h2>Pages</h2>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h2>Contact</h2>
-        <ul>
-          <li><a href="mailto:info@spinternationalpvtltd.com">info@spinternationalpvtltd.com</a></li>
-          <li><a id="desk-whatsapp-foot" data-wa href="https://wa.me/919286492989">WhatsApp +91 92864 92989</a></li>
-          <li>Sikandrabad, Uttar Pradesh</li>
-        </ul>
-      </div>
+      <div class="footer-brand"><img class="footer-logo" src="assets/logo-lockup.png" alt="SP International Pvt Ltd — Trade Beyond Borders" width="1048" height="407" loading="lazy"><p>Indian spices. Your buying brief.<br>A connection beyond borders.</p></div>
+      <div><h2>Explore</h2><ul><li><a href="index.html">Home</a></li><li><a href="products.html">Our spices</a></li><li><a href="about.html">Our story</a></li><li><a href="#quote-form">Request a quotation</a></li></ul></div>
+      <div><h2>Speak to the desk</h2><ul><li><a href="mailto:info@spinternationalpvtltd.com">info@spinternationalpvtltd.com</a></li><li><a href="https://wa.me/919286492989" rel="noopener">WhatsApp +91 92864 92989</a></li><li>Sikandrabad, Uttar Pradesh, India</li></ul></div>
     </div>
-    <div class="wrap footer-base">
-      <p>&copy; <span id="year">2026</span> SP International Pvt Ltd. Merchant trader. We source and quote.</p>
-      <p>spinternationalpvtltd.com</p>
-    </div>
+    <div class="wrap footer-base"><p>&copy; <span id="year">2026</span> SP International Pvt Ltd. Merchant trader. We source and quote.</p><button class="motion-toggle" type="button" data-motion-toggle aria-pressed="false" hidden>Pause motion</button></div>
   </footer>
+  <nav class="mobile-enquiry" aria-label="Quick enquiry"><a class="btn btn-gold" href="#quote-form">Written quote <span aria-hidden="true">↗</span></a><a class="btn btn-ghost" href="https://wa.me/919286492989?text=Hello%20SP%20International%2C%20I%20would%20like%20a%20spice%20quotation." rel="noopener">WhatsApp <span aria-hidden="true">↗</span></a></nav>
+  <script src="js/motion.js"></script>
+  <script src="js/quote-config.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

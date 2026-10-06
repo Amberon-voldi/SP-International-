@@ -20,28 +20,16 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="about-page">
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="brand" href="index.html">
-        <img class="brand-lockup" src="assets/logo-lockup.png" alt="SP International Pvt Ltd — Trade Beyond Borders" width="1048" height="407">
-        <img class="brand-mark" src="assets/logo-mark.png" alt="SP International Pvt Ltd" width="433" height="454">
-      </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        <span class="sr-only">Menu</span>
-        <span></span><span></span>
-      </button>
-      <nav id="site-nav" class="site-nav" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="about.html" aria-current="page">About</a>
-        <a href="contact.html">Contact</a>
-        <a class="btn btn-gold" href="contact.html">Request a quote</a>
-      </nav>
+      <a class="brand" href="index.html"><img class="brand-lockup" src="assets/logo-lockup.png" alt="SP International Pvt Ltd — Trade Beyond Borders" width="1048" height="407"></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="sr-only">Menu</span><span></span><span></span></button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="index.html">Home</a><a href="products.html">Our spices</a><a href="about.html" aria-current="page">Our story</a><a href="contact.html">Contact</a><a class="btn btn-gold" href="contact.html#quote-form">Request a quote <span aria-hidden="true">↗</span></a></nav>
     </div>
+    <div class="scroll-progress" aria-hidden="true"></div>
   </header>
-
   <main id="main">
     <section class="page-hero slim">
       <img class="orbit" src="assets/orbit.svg" alt="">
@@ -85,10 +73,7 @@
 
     <section class="section section-cream">
       <div class="wrap">
-        <div class="section-head">
-          <p class="kicker">Working with us</p>
-          <h2>Clear, unhurried steps</h2>
-        </div>
+        <div class="section-head" data-reveal><p class="kicker">How we work together</p><h2>A clear brief.<br><em>A considered connection.</em></h2><p>A short first message is enough to begin. The buying details can follow.</p></div>
         <div class="steps">
           <article class="step">
             <span class="num">01</span>
@@ -106,52 +91,23 @@
             <p>A written quote, then your call. No pressure and no fake testimonials.</p>
           </article>
         </div>
-        <p class="legal-note narrow">This page does not list certifications, laboratory claims, or trade marks we do not hold. If a destination needs a specific document, raise it in the enquiry. We address documents in the quote, not as advertising.</p>
+        <p class="legal-note narrow" data-reveal>Specifications and destination documents are addressed during sourcing and quotation. This website does not claim certifications, laboratory results or published stock availability.</p>
       </div>
     </section>
 
-    <section class="section section-navy cta-band">
-      <div class="wrap">
-        <p class="kicker light">Contact</p>
-        <h2 class="display">A short brief is enough.</h2>
-        <p class="lede">Write to the desk. We reply as traders.</p>
-        <div class="btn-row">
-          <a class="btn btn-gold" href="contact.html">Request a quote</a>
-          <a class="btn btn-ghost" href="mailto:info@spinternationalpvtltd.com">info@spinternationalpvtltd.com</a>
-        </div>
-      </div>
-    </section>
+    <section class="section section-navy cta-band"><div class="wrap cta-inner" data-reveal><div><p class="kicker light">Speak to the desk</p><h2 class="display">Your next source<br>starts <em>right here.</em></h2></div><div><p class="lede">Start with the spice. We’ll work through the requirements together.</p><div class="btn-row"><a class="btn btn-gold" href="contact.html#quote-form">Request a quotation <span aria-hidden="true">↗</span></a><a class="btn btn-ghost" href="https://wa.me/919286492989?text=Hello%20SP%20International%2C%20I%20would%20like%20a%20spice%20quotation." rel="noopener">Chat on WhatsApp <span aria-hidden="true">↗</span></a></div></div></div></section>
   </main>
-
   <footer class="site-footer">
     <div class="wrap footer-grid">
-      <div>
-        <img class="footer-logo" src="assets/logo-lockup.png" alt="SP International Pvt Ltd — Trade Beyond Borders" width="1048" height="407">
-        <p class="footer-motto">Trade Beyond Borders</p>
-      </div>
-      <div>
-        <h2>Pages</h2>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h2>Contact</h2>
-        <ul>
-          <li><a href="mailto:info@spinternationalpvtltd.com">info@spinternationalpvtltd.com</a></li>
-          <li><a href="https://wa.me/919286492989" rel="noopener">WhatsApp +91 92864 92989</a></li>
-          <li>Sikandrabad, Uttar Pradesh</li>
-        </ul>
-      </div>
+      <div class="footer-brand"><img class="footer-logo" src="assets/logo-lockup.png" alt="SP International Pvt Ltd — Trade Beyond Borders" width="1048" height="407" loading="lazy"><p>Indian spices. Your buying brief.<br>A connection beyond borders.</p></div>
+      <div><h2>Explore</h2><ul><li><a href="index.html">Home</a></li><li><a href="products.html">Our spices</a></li><li><a href="about.html">Our story</a></li><li><a href="contact.html#quote-form">Request a quotation</a></li></ul></div>
+      <div><h2>Speak to the desk</h2><ul><li><a href="mailto:info@spinternationalpvtltd.com">info@spinternationalpvtltd.com</a></li><li><a href="https://wa.me/919286492989" rel="noopener">WhatsApp +91 92864 92989</a></li><li>Sikandrabad, Uttar Pradesh, India</li></ul></div>
     </div>
-    <div class="wrap footer-base">
-      <p>&copy; <span id="year">2026</span> SP International Pvt Ltd. Merchant trader. We source and quote.</p>
-      <p>spinternationalpvtltd.com</p>
-    </div>
+    <div class="wrap footer-base"><p>&copy; <span id="year">2026</span> SP International Pvt Ltd. Merchant trader. We source and quote.</p><button class="motion-toggle" type="button" data-motion-toggle aria-pressed="false" hidden>Pause motion</button></div>
+    <div class="wrap photo-credits">Illustrative photography: <a href="https://www.pexels.com/photo/assorted-spices-on-brown-wooden-table-2802527/" rel="noopener">Shantanu Pal</a> &amp; <a href="https://www.pexels.com/photo/assorted-spices-on-round-bowls-6126980/" rel="noopener">Rachel Claire</a> / Pexels.</div>
   </footer>
+  <nav class="mobile-enquiry" aria-label="Quick enquiry"><a class="btn btn-gold" href="contact.html#quote-form">Written quote <span aria-hidden="true">↗</span></a><a class="btn btn-ghost" href="https://wa.me/919286492989?text=Hello%20SP%20International%2C%20I%20would%20like%20a%20spice%20quotation." rel="noopener">WhatsApp <span aria-hidden="true">↗</span></a></nav>
+  <script src="js/motion.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
