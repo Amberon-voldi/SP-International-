@@ -123,41 +123,47 @@
       product: val("product"),
       productLabel: productEl.options[productEl.selectedIndex].text,
       quantity: val("quantity"),
-      unit: selectedUnit(),
+      unit: val("quantity") && checked ? checked.value : "",
       message: val("message")
     };
   }
 
-  function selectedUnit() {
-    var checked = document.querySelector('#quote-form input[name="quantity_unit"]:checked');
-    return checked ? String(checked.value || "").trim() : "";
+  function issue(fields, message, focus) {
+    return { fields: fields, message: message, focus: focus || fields[0] };
   }
 
-  function markUnitInvalid(invalid) {
-    var field = document.getElementById("quantity-unit");
-    if (!field) return;
-    if (invalid) field.setAttribute("aria-invalid", "true");
-    else field.removeAttribute("aria-invalid");
-  }
-
-  function validate(data) {
-    if (!data.name) return "Please enter your name.";
-    if (!data.email && !data.whatsapp) return "Please give an email or a WhatsApp number so we can reply.";
-    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return "Please check the email address.";
-    if (data.quantity && data.unit !== "kg" && data.unit !== "tonnes") {
-      markUnitInvalid(true);
-      var firstUnit = document.getElementById("quantity-unit-kg");
-      if (firstUnit) firstUnit.focus();
-      return "Please choose kg or tonnes for the quantity.";
+  function validate(data, formal) {
+    if (!data.product) return issue(["product"], "Please choose a product for your quotation.");
+    // A WhatsApp conversation or a draft needs only the product, even if the
+    // buyer has not completed (or has started editing) the formal quote fields.
+    if (!formal) return null;
+    if (!data.country) return issue(["country"], "Please add your delivery country for a formal quotation, or use WhatsApp with just your product.");
+    if (!data.email) return issue(["email"], "Please add an email address for your formal quotation, or use WhatsApp with just your product.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      return issue(["email"], "Please check your email address, for example you@company.com.");
     }
-    markUnitInvalid(false);
-    if (!data.message) return "Please add a short message.";
-    return "";
+    var phoneDigits = data.whatsapp.replace(/\D/g, "");
+    if (data.whatsapp && (!/^\+?[\d\s().-]+$/.test(data.whatsapp) || phoneDigits.length < 7 || phoneDigits.length > 15)) {
+      return issue(["whatsapp"], "Please check your optional phone number and include the country code, or leave it blank.");
+    }
+    if (data.quantity && data.unit !== "kg" && data.unit !== "tonnes") {
+      return issue(["quantity-unit"], "Choose kg or tonnes for your quantity, or leave the quantity blank.", "quantity-unit-kg");
+    }
+    return null;
   }
 
-  function quantityWithUnit(data) {
-    if (!data.quantity) return "—";
-    return data.unit ? data.quantity + " " + data.unit : data.quantity;
+  function showError(error) {
+    error.fields.forEach(function (id) {
+      var field = document.getElementById(id);
+      field.setAttribute("aria-invalid", "true");
+      var description = field.getAttribute("aria-describedby") || "";
+      field.setAttribute("aria-describedby", (description + " form-status").trim());
+    });
+    setStatus("error", error.message);
+    var focusField = document.getElementById(error.focus);
+    var details = focusField.closest("details");
+    if (details) details.open = true;
+    focusField.focus();
   }
 
   function composeBody(data) {
@@ -165,14 +171,9 @@
     return [
       "Quotation enquiry — SP International Pvt Ltd",
       "",
-      "Name: " + data.name,
-      "Company: " + (data.company || "—"),
-      "Country: " + (data.country || "—"),
-      "Email: " + (data.email || "—"),
-      "WhatsApp: " + (data.whatsapp || "—"),
-      "Product interest: " + (data.product || "—"),
-      "Quantity (optional): " + quantityWithUnit(data),
-      "Unit: " + (data.unit || "—"),
+      "Product: " + data.productLabel,
+      "Delivery country: " + (data.country || "To be discussed"),
+      "Quantity: " + quantity,
       "",
       "Name: " + (data.name || "Not provided"),
       "Company: " + (data.company || "Not provided"),
@@ -217,36 +218,53 @@
     submitButton.textContent = busy ? "Sending request…" : receivedKey ? "Request received by service" : submitLabel;
   }
 
-    form.querySelectorAll('input[name="quantity_unit"]').forEach(function (radio) {
-      radio.addEventListener("change", function () { markUnitInvalid(false); });
-    });
-
-    var quantityInput = document.getElementById("quantity");
-    function syncUnitRequired() {
-      var needed = !!(quantityInput && quantityInput.value.trim());
-      form.querySelectorAll('input[name="quantity_unit"]').forEach(function (radio) {
-        if (needed) radio.setAttribute("required", "");
-        else radio.removeAttribute("required");
+  function setBusy(value) {
+    busy = value;
+    form.setAttribute("aria-busy", value ? "true" : "false");
+    if (value) {
+      lockedFields = [];
+      form.querySelectorAll("input, select, textarea").forEach(function (field) {
+        if (field === draftField) return;
+        lockedFields.push({ field: field, disabled: field.disabled });
+        field.disabled = true;
       });
-      var field = document.getElementById("quantity-unit");
-      if (field) field.setAttribute("aria-required", needed ? "true" : "false");
+    } else {
+      lockedFields.forEach(function (entry) { entry.field.disabled = entry.disabled; });
+      lockedFields = [];
     }
-    if (quantityInput) {
-      quantityInput.addEventListener("input", syncUnitRequired);
-      syncUnitRequired();
-    }
+    syncActions();
+  }
 
-    var waBtn = document.getElementById("send-whatsapp");
-    if (waBtn) {
-      waBtn.addEventListener("click", function () {
-        var data = gather();
-        var err = validate(data);
-        if (err) {
-          setStatus("error", err);
-          return;
-        }
-        setStatus("ok", "Opening WhatsApp with the same message.");
-        openWhatsApp(data);
+  function syncUnitRequired() {
+    var needed = !!val("quantity");
+    form.querySelectorAll('input[name="quantity_unit"]').forEach(function (radio) {
+      radio.required = needed;
+    });
+    if (!needed || form.querySelector('input[name="quantity_unit"]:checked')) clearInvalid("quantity-unit");
+  }
+
+  async function submitRequest(draft) {
+    var controller = new AbortController();
+    var timedOut = false;
+    var key = JSON.stringify(draft.data);
+    var payload = Object.assign({}, draft.data, { enquiry: draft.body });
+    setBusy(true);
+    form.dataset.submissionState = "sending";
+    setStatus("", "Sending your request to the quotation service. Please wait for acknowledgement; do not submit again.");
+    draftHint.textContent = "Your online request is awaiting acknowledgement. This draft is available as a backup; opening it does not send another request.";
+    var timer = setTimeout(function () {
+      timedOut = true;
+      controller.abort();
+    }, timeoutMs);
+    try {
+      var response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload),
+        credentials: "omit",
+        redirect: "error",
+        referrerPolicy: "no-referrer",
+        signal: controller.signal
       });
       if (!response.ok) throw new Error("Service did not acknowledge");
       var acknowledgement = await response.json();
